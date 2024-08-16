@@ -1,3 +1,5 @@
+import { currencies } from "../data";
+
 const CriptoSearchForm = () => {
   return (
     <form className="flex flex-col gap-8">
@@ -11,6 +13,12 @@ const CriptoSearchForm = () => {
           id="currency"
         >
           <option value="">-- Seleccione --</option>
+          {currencies.map((currency) => (
+            <option key={currency.code} value={currency.name}>
+              {" "}
+              {currency.name}{" "}
+            </option>
+          ))}
         </select>
       </div>
 

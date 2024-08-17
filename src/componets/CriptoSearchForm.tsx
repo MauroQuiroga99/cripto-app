@@ -1,6 +1,37 @@
-import { currencies } from "../data";
+import { coins } from "../data";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrencies } from "../store/selectors/currencies";
+import axios from "axios";
+import { CurrencyResponse } from "../types";
+import { setCurrencies } from "../store/slices/criptoSlice";
+import { useEffect } from "react";
 
 const CriptoSearchForm = () => {
+  const dispatch = useDispatch();
+  const currencies = useSelector(getCurrencies);
+
+  useEffect(() => {
+    callCurrencyApi();
+  }, []);
+
+  console.log(currencies);
+
+  async function callCurrencyApi() {
+    const url =
+      "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=20&tsym=USD";
+    const {
+      data: { Data },
+    } = await axios<CurrencyResponse>(url);
+
+    const result = Data.map((item) => {
+      return {
+        moneda: item.CoinInfo.FullName,
+        code: item.CoinInfo.Name,
+      };
+    });
+    dispatch(setCurrencies({ result }));
+  }
+
   return (
     <form className="flex flex-col gap-8">
       <div className="flex flex-col gap-8">
@@ -13,7 +44,7 @@ const CriptoSearchForm = () => {
           id="currency"
         >
           <option value="">-- Seleccione --</option>
-          {currencies.map((currency) => (
+          {coins.map((currency) => (
             <option key={currency.code} value={currency.name}>
               {" "}
               {currency.name}{" "}
@@ -32,6 +63,11 @@ const CriptoSearchForm = () => {
           id="criptocurrency"
         >
           <option value="">-- Seleccione --</option>
+          {currencies.map((currency) => (
+            <option key={currency.code} value={currency.moneda}>
+              {currency.moneda}
+            </option>
+          ))}
         </select>
       </div>
 

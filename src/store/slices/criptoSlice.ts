@@ -1,24 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { CriptoCoin } from "../../types";
 
-const initialState = {};
+type CriptoState = {
+  currencies: CriptoCoin[];
+};
 
-async function getCurrency() {
-  const url =
-    "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=20&tsym=USD";
-  const {
-    data: { Data },
-  } = await axios(url);
-  console.log(Data);
-}
+const initialState: CriptoState = {
+  currencies: [],
+};
 
 const currencySlice = createSlice({
-  name: "currency",
+  name: "cripto",
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrencies: (state, action) => {
+      state.currencies = action.payload.result;
+    },
+  },
 });
 
-getCurrency();
-
-export const {} = currencySlice.actions;
+export const { setCurrencies } = currencySlice.actions;
 export default currencySlice.reducer;

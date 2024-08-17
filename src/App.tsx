@@ -1,6 +1,6 @@
 import CriptoSearchForm from "./componets/CriptoSearchForm";
-
 import "./index.css";
+
 function App() {
   return (
     <>

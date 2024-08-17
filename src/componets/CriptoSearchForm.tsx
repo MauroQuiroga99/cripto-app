@@ -4,7 +4,7 @@ import { getCurrencies } from "../store/selectors/currencies";
 import axios from "axios";
 import { CurrencyResponse } from "../types";
 import { setCurrencies } from "../store/slices/criptoSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const CriptoSearchForm = () => {
   const dispatch = useDispatch();

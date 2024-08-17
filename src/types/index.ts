@@ -18,3 +18,8 @@ export type CriptoCoin = {
   code: string;
   moneda: string;
 };
+
+export type SeletedCurrency = {
+  currency: string;
+  criptocurrency: string;
+};

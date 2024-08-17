@@ -1,12 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { CriptoCoin } from "../../types";
+import { CriptoCoin, SeletedCurrency } from "../../types";
 
 type CriptoState = {
   currencies: CriptoCoin[];
+  seletedPair: SeletedCurrency;
 };
 
 const initialState: CriptoState = {
   currencies: [],
+  seletedPair: {
+    currency: "",
+    criptocurrency: "",
+  },
 };
 
 const currencySlice = createSlice({
@@ -16,8 +21,12 @@ const currencySlice = createSlice({
     setCurrencies: (state, action) => {
       state.currencies = action.payload.result;
     },
+
+    setSeletedPair: (state, action) => {
+      state.seletedPair = action.payload;
+    },
   },
 });
 
-export const { setCurrencies } = currencySlice.actions;
+export const { setCurrencies, setSeletedPair } = currencySlice.actions;
 export default currencySlice.reducer;

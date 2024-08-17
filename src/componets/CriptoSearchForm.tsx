@@ -1,20 +1,23 @@
 import { coins } from "../data";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrencies } from "../store/selectors/currencies";
+import { getCurrencies, getSelectedPair } from "../store/selectors/currencies";
 import axios from "axios";
 import { CurrencyResponse } from "../types";
-import { setCurrencies } from "../store/slices/criptoSlice";
-import { useEffect, useState } from "react";
+import { setCurrencies, setSeletedPair } from "../store/slices/criptoSlice";
+import { ChangeEvent, useEffect } from "react";
 
 const CriptoSearchForm = () => {
   const dispatch = useDispatch();
   const currencies = useSelector(getCurrencies);
+  const selectedPair = useSelector(getSelectedPair);
+  //const [pair, setPair] = useState<SeletedCurrency>({
+  // currency: "",
+  //criptocurrency: "",
+  //});
 
   useEffect(() => {
     callCurrencyApi();
   }, []);
-
-  console.log(currencies);
 
   async function callCurrencyApi() {
     const url =
@@ -32,6 +35,16 @@ const CriptoSearchForm = () => {
     dispatch(setCurrencies({ result }));
   }
 
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    dispatch(
+      setSeletedPair({
+        ...selectedPair,
+        [name]: value,
+      })
+    );
+  };
+
   return (
     <form className="flex flex-col gap-8">
       <div className="flex flex-col gap-8">
@@ -39,13 +52,14 @@ const CriptoSearchForm = () => {
           Moneda :
         </label>
         <select
+          onChange={handleChange}
           className="bg-slate-200 p-2 rounded-md"
           name="currency"
           id="currency"
         >
           <option value="">-- Seleccione --</option>
           {coins.map((currency) => (
-            <option key={currency.code} value={currency.name}>
+            <option key={currency.name} value={currency.code}>
               {" "}
               {currency.name}{" "}
             </option>
@@ -61,6 +75,7 @@ const CriptoSearchForm = () => {
           className="bg-slate-200 p-2 rounded-md"
           name="criptocurrency"
           id="criptocurrency"
+          onChange={handleChange}
         >
           <option value="">-- Seleccione --</option>
           {currencies.map((currency) => (

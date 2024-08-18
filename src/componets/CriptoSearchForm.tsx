@@ -2,7 +2,7 @@ import { coins } from "../data";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrencies, getSelectedPair } from "../store/selectors/currencies";
 import axios from "axios";
-import { CurrencyResponse } from "../types";
+import { CurrencyResponse, SeletedCurrency } from "../types";
 import { setCurrencies, setSeletedPair } from "../store/slices/criptoSlice";
 import { ChangeEvent, useEffect, useState } from "react";
 import ErrorMessage from "./ErrorMessage";
@@ -32,6 +32,16 @@ const CriptoSearchForm = () => {
     dispatch(setCurrencies({ result }));
   }
 
+  async function callDataCurrencyApi(selectedPair: SeletedCurrency) {
+    const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${selectedPair.currency}&tsyms=${selectedPair.criptocurrency},USD`;
+
+    const {
+      data: { DISPLAY },
+    } = await axios(url);
+    console.log(DISPLAY);
+    console.log(url);
+  }
+
   const [error, setError] = useState("");
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -52,6 +62,7 @@ const CriptoSearchForm = () => {
     }
 
     setError("");
+    callDataCurrencyApi(selectedPair);
   };
 
   return (

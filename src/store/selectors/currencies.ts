@@ -5,5 +5,5 @@ export const getCurrencies = (state: RootState) => {
 };
 
 export const getSelectedPair = (state: RootState) => {
-  return state.cripto.seletedPair;
+  return state.cripto.selectedPair;
 };

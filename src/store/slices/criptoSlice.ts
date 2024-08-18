@@ -3,12 +3,12 @@ import { CriptoCoin, SeletedCurrency } from "../../types";
 
 type CriptoState = {
   currencies: CriptoCoin[];
-  seletedPair: SeletedCurrency;
+  selectedPair: SeletedCurrency;
 };
 
 const initialState: CriptoState = {
   currencies: [],
-  seletedPair: {
+  selectedPair: {
     currency: "",
     criptocurrency: "",
   },
@@ -23,7 +23,7 @@ const currencySlice = createSlice({
     },
 
     setSeletedPair: (state, action) => {
-      state.seletedPair = action.payload;
+      state.selectedPair = action.payload;
     },
   },
 });

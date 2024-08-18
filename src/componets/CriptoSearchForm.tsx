@@ -4,16 +4,13 @@ import { getCurrencies, getSelectedPair } from "../store/selectors/currencies";
 import axios from "axios";
 import { CurrencyResponse } from "../types";
 import { setCurrencies, setSeletedPair } from "../store/slices/criptoSlice";
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import ErrorMessage from "./ErrorMessage";
 
 const CriptoSearchForm = () => {
   const dispatch = useDispatch();
   const currencies = useSelector(getCurrencies);
   const selectedPair = useSelector(getSelectedPair);
-  //const [pair, setPair] = useState<SeletedCurrency>({
-  // currency: "",
-  //criptocurrency: "",
-  //});
 
   useEffect(() => {
     callCurrencyApi();
@@ -35,6 +32,8 @@ const CriptoSearchForm = () => {
     dispatch(setCurrencies({ result }));
   }
 
+  const [error, setError] = useState("");
+
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
     dispatch(
@@ -45,8 +44,19 @@ const CriptoSearchForm = () => {
     );
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (Object.values(selectedPair).includes("")) {
+      setError("Todos los campos son obligatorios");
+      return;
+    }
+
+    setError("");
+  };
+
   return (
-    <form className="flex flex-col gap-8">
+    <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
+      {error && <ErrorMessage> {error} </ErrorMessage>}
       <div className="flex flex-col gap-8">
         <label className=" flex start text-slate-700" htmlFor="currency">
           Moneda :
@@ -56,6 +66,7 @@ const CriptoSearchForm = () => {
           className="bg-slate-200 p-2 rounded-md"
           name="currency"
           id="currency"
+          value={selectedPair.currency}
         >
           <option value="">-- Seleccione --</option>
           {coins.map((currency) => (
@@ -76,6 +87,7 @@ const CriptoSearchForm = () => {
           name="criptocurrency"
           id="criptocurrency"
           onChange={handleChange}
+          value={selectedPair.criptocurrency}
         >
           <option value="">-- Seleccione --</option>
           {currencies.map((currency) => (

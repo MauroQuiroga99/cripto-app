@@ -23,3 +23,18 @@ export type SeletedCurrency = {
   currency: string;
   criptocurrency: string;
 };
+
+export type CryptoPrice = {
+  DISPLAY: {
+    [key: string]: {
+      [key: string]: {
+        PRICE: string;
+        HIGHDAY: string;
+        LOWDAY: string;
+        CHANGEPCT24HOUR: string;
+        LASTUPDATE: string;
+        IMAGEURL: string;
+      };
+    };
+  };
+};

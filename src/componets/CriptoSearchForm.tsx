@@ -2,7 +2,7 @@ import { coins } from "../data";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrencies, getSelectedPair } from "../store/selectors/currencies";
 import axios from "axios";
-import { CurrencyResponse, SeletedCurrency } from "../types";
+import { CryptoPrice, CurrencyResponse, SeletedCurrency } from "../types";
 import { setCurrencies, setSeletedPair } from "../store/slices/criptoSlice";
 import { ChangeEvent, useEffect, useState } from "react";
 import ErrorMessage from "./ErrorMessage";
@@ -22,6 +22,7 @@ const CriptoSearchForm = () => {
     const {
       data: { Data },
     } = await axios<CurrencyResponse>(url);
+    console.log(Data);
 
     const result = Data.map((item) => {
       return {
@@ -30,16 +31,16 @@ const CriptoSearchForm = () => {
       };
     });
     dispatch(setCurrencies({ result }));
+    console.log(result);
   }
 
   async function callDataCurrencyApi(selectedPair: SeletedCurrency) {
-    const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${selectedPair.currency}&tsyms=${selectedPair.criptocurrency},USD`;
+    const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${selectedPair.criptocurrency}&tsyms=${selectedPair.currency}`;
 
     const {
       data: { DISPLAY },
-    } = await axios(url);
+    } = await axios<CryptoPrice>(url);
     console.log(DISPLAY);
-    console.log(url);
   }
 
   const [error, setError] = useState("");
@@ -102,7 +103,7 @@ const CriptoSearchForm = () => {
         >
           <option value="">-- Seleccione --</option>
           {currencies.map((currency) => (
-            <option key={currency.code} value={currency.moneda}>
+            <option key={currency.moneda} value={currency.code}>
               {currency.moneda}
             </option>
           ))}

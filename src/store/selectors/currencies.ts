@@ -7,3 +7,7 @@ export const getCurrencies = (state: RootState) => {
 export const getSelectedPair = (state: RootState) => {
   return state.cripto.selectedPair;
 };
+
+export const getCryptoData = (state: RootState) => {
+  return state.cripto.cryptoData;
+};

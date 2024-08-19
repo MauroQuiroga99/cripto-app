@@ -1,9 +1,17 @@
 import { coins } from "../data";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrencies, getSelectedPair } from "../store/selectors/currencies";
+import {
+  getCryptoData,
+  getCurrencies,
+  getSelectedPair,
+} from "../store/selectors/currencies";
 import axios from "axios";
 import { CryptoPrice, CurrencyResponse, SeletedCurrency } from "../types";
-import { setCurrencies, setSeletedPair } from "../store/slices/criptoSlice";
+import {
+  setCryptoData,
+  setCurrencies,
+  setSeletedPair,
+} from "../store/slices/criptoSlice";
 import { ChangeEvent, useEffect, useState } from "react";
 import ErrorMessage from "./ErrorMessage";
 
@@ -11,6 +19,7 @@ const CriptoSearchForm = () => {
   const dispatch = useDispatch();
   const currencies = useSelector(getCurrencies);
   const selectedPair = useSelector(getSelectedPair);
+  const cryptoData = useSelector(getCryptoData);
 
   useEffect(() => {
     callCurrencyApi();
@@ -40,7 +49,20 @@ const CriptoSearchForm = () => {
     const {
       data: { DISPLAY },
     } = await axios<CryptoPrice>(url);
-    console.log(DISPLAY);
+    const resultData =
+      DISPLAY[selectedPair.criptocurrency][selectedPair.currency];
+
+    const filteredData = {
+      PRICE: resultData.PRICE,
+      HIGHDAY: resultData.HIGHDAY,
+      LOWDAY: resultData.LOWDAY,
+      CHANGEPCT24HOUR: resultData.CHANGEPCT24HOUR,
+      LASTUPDATE: resultData.LASTUPDATE,
+      IMAGEURL: resultData.IMAGEURL,
+    };
+    dispatch(setCryptoData(filteredData));
+    console.log(filteredData);
+    console.log(cryptoData);
   }
 
   const [error, setError] = useState("");

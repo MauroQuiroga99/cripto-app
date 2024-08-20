@@ -10,6 +10,7 @@ import { CurrencyResponse, SeletedCurrency } from "../types";
 import {
   setCryptoData,
   setCurrencies,
+  setLoading,
   setSeletedPair,
 } from "../store/slices/criptoSlice";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -44,6 +45,7 @@ const CriptoSearchForm = () => {
   async function callDataCurrencyApi(selectedPair: SeletedCurrency) {
     const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${selectedPair.criptocurrency}&tsyms=${selectedPair.currency}`;
 
+    dispatch(setLoading(true));
     const {
       data: { DISPLAY },
     } = await axios(url);

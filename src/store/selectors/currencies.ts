@@ -11,3 +11,7 @@ export const getSelectedPair = (state: RootState) => {
 export const getCryptoData = (state: RootState) => {
   return state.cripto.cryptoData;
 };
+
+export const getLoading = (state: RootState) => {
+  return state.cripto.loading;
+};

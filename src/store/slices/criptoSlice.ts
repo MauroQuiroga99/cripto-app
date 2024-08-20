@@ -5,6 +5,7 @@ type CriptoState = {
   currencies: CriptoCoin[];
   selectedPair: SeletedCurrency;
   cryptoData: CryptoPrice;
+  loading: boolean;
 };
 
 const initialState: CriptoState = {
@@ -14,6 +15,7 @@ const initialState: CriptoState = {
     criptocurrency: "",
   },
   cryptoData: {} as CryptoPrice,
+  loading: false,
 };
 
 const currencySlice = createSlice({
@@ -30,10 +32,15 @@ const currencySlice = createSlice({
 
     setCryptoData: (state, action) => {
       state.cryptoData = action.payload;
+      state.loading = false;
+    },
+
+    setLoading: (state, action) => {
+      state.loading = action.payload;
     },
   },
 });
 
-export const { setCurrencies, setSeletedPair, setCryptoData } =
+export const { setCurrencies, setSeletedPair, setCryptoData, setLoading } =
   currencySlice.actions;
 export default currencySlice.reducer;

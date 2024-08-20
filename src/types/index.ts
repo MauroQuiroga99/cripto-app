@@ -25,16 +25,10 @@ export type SeletedCurrency = {
 };
 
 export type CryptoPrice = {
-  DISPLAY: {
-    [key: string]: {
-      [key: string]: {
-        PRICE: string;
-        HIGHDAY: string;
-        LOWDAY: string;
-        CHANGEPCT24HOUR: string;
-        LASTUPDATE: string;
-        IMAGEURL: string;
-      };
-    };
-  };
+  PRICE: string;
+  HIGHDAY: string;
+  LOWDAY: string;
+  CHANGEPCT24HOUR: string;
+  LASTUPDATE: string;
+  IMAGEURL: string;
 };

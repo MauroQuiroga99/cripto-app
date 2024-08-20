@@ -4,7 +4,7 @@ import { CriptoCoin, CryptoPrice, SeletedCurrency } from "../../types";
 type CriptoState = {
   currencies: CriptoCoin[];
   selectedPair: SeletedCurrency;
-  cryptoData: CryptoPrice["DISPLAY"];
+  cryptoData: CryptoPrice;
 };
 
 const initialState: CriptoState = {
@@ -13,7 +13,7 @@ const initialState: CriptoState = {
     currency: "",
     criptocurrency: "",
   },
-  cryptoData: {},
+  cryptoData: {} as CryptoPrice,
 };
 
 const currencySlice = createSlice({

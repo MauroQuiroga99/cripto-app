@@ -6,7 +6,7 @@ import {
   getSelectedPair,
 } from "../store/selectors/currencies";
 import axios from "axios";
-import { CryptoPrice, CurrencyResponse, SeletedCurrency } from "../types";
+import { CurrencyResponse, SeletedCurrency } from "../types";
 import {
   setCryptoData,
   setCurrencies,
@@ -31,7 +31,6 @@ const CriptoSearchForm = () => {
     const {
       data: { Data },
     } = await axios<CurrencyResponse>(url);
-    console.log(Data);
 
     const result = Data.map((item) => {
       return {
@@ -40,7 +39,6 @@ const CriptoSearchForm = () => {
       };
     });
     dispatch(setCurrencies({ result }));
-    console.log(result);
   }
 
   async function callDataCurrencyApi(selectedPair: SeletedCurrency) {
@@ -48,7 +46,7 @@ const CriptoSearchForm = () => {
 
     const {
       data: { DISPLAY },
-    } = await axios<CryptoPrice>(url);
+    } = await axios(url);
     const resultData =
       DISPLAY[selectedPair.criptocurrency][selectedPair.currency];
 
@@ -61,7 +59,6 @@ const CriptoSearchForm = () => {
       IMAGEURL: resultData.IMAGEURL,
     };
     dispatch(setCryptoData(filteredData));
-    console.log(filteredData);
     console.log(cryptoData);
   }
 
@@ -95,6 +92,7 @@ const CriptoSearchForm = () => {
         <label className=" flex start text-slate-700" htmlFor="currency">
           Moneda :
         </label>
+
         <select
           onChange={handleChange}
           className="bg-slate-200 p-2 rounded-md"

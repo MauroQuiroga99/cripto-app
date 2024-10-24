@@ -34,7 +34,7 @@ const CriptoPriceDisplay = () => {
           />
           <div className=" flex flex-col justify-start">
             <p className=" flex justify-start  ">
-              El Precio es de:
+              El Precio es de: XXXX
               <span className="font-bold"> {cryptoData.PRICE}</span>
             </p>
             <p className=" flex justify-start ">
